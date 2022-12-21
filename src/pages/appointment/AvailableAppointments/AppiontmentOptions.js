@@ -1,7 +1,7 @@
 import React from "react";
 
 const AppiontmentOptions = ({ appiontmentOption, setTretment }) => {
-  const { name, slots } = appiontmentOption;
+  const { name, slots, price } = appiontmentOption;
   return (
     <div className="card text-center shadow-xl">
       <div className="card-body ">
@@ -13,6 +13,7 @@ const AppiontmentOptions = ({ appiontmentOption, setTretment }) => {
           {slots.length}
           {slots.length > 1 ? "spaces" : "space"} avilable
         </p>
+        <p>price:${price}</p>
         <div className="card-actions justify-center">
           <label
             onClick={() => setTretment(appiontmentOption)}

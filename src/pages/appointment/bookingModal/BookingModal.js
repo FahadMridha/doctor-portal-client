@@ -1,9 +1,13 @@
 import { format } from "date-fns";
-import React from "react";
+import React, { useContext } from "react";
+import toast from "react-hot-toast";
+import { AuthContext } from "../../../context/AuthProvider";
 
-const BookingModal = ({ tretment, setTretment, selectedDate }) => {
-  const { name, slots } = tretment; //tretment is an appionment options just diffrent name
+const BookingModal = ({ tretment, setTretment, selectedDate, refetch }) => {
+  const { name: tretmentName, slots, price } = tretment; //tretment is an appionment options just diffrent name
   const date = format(selectedDate, "PP");
+
+  const { user } = useContext(AuthContext);
   const handlerBooking = (event) => {
     event.preventDefault();
     const form = event.target;
@@ -14,14 +18,34 @@ const BookingModal = ({ tretment, setTretment, selectedDate }) => {
 
     const booking = {
       appiontmentDate: date,
-      tretment: name,
+      tretment: tretmentName,
       patient: name,
       slot,
       email,
       phone,
+      price,
     };
     console.log(booking);
-    setTretment(null);
+
+    fetch("http://localhost:5000/bookings", {
+      method: "POST",
+      headers: {
+        "content-type": "application/json",
+      },
+      body: JSON.stringify(booking),
+    })
+      .then((res) => res.json())
+      .then((data) => {
+        console.log(data);
+        if (data.acknowledged) {
+          setTretment(null);
+          toast.success("booking comfired");
+          refetch();
+        } else {
+          toast.error(data.message);
+        }
+      })
+      .catch((error) => console.log(error));
   };
 
   return (
@@ -35,7 +59,7 @@ const BookingModal = ({ tretment, setTretment, selectedDate }) => {
           >
             ✕
           </label>
-          <h3 className="text-lg font-bold">{name}</h3>
+          <h3 className="text-lg font-bold">{tretmentName}</h3>
           <form
             onSubmit={handlerBooking}
             className="grid grid-cols-1 gap-3 mt-10"
@@ -56,12 +80,16 @@ const BookingModal = ({ tretment, setTretment, selectedDate }) => {
             <input
               name="name"
               type="text"
+              defaultValue={user?.displayName}
+              disabled
               placeholder="Your name"
               className="input w-full input-bordered"
             />
             <input
               name="email"
               type="email"
+              defaultValue={user?.email}
+              disabled
               placeholder="Your email"
               className="input w-full input-bordered "
             />

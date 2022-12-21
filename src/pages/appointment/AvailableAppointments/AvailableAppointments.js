@@ -2,15 +2,39 @@ import React, { useEffect, useState } from "react";
 import { format } from "date-fns";
 import AppiontmentOptions from "./AppiontmentOptions";
 import BookingModal from "../bookingModal/BookingModal";
-const AvailableAppointments = ({ selectedDate }) => {
-  const [appiontmentOptions, setAppiontmentOptions] = useState([]);
-  const [tretment, setTretment] = useState(null);
+import { useQuery } from "@tanstack/react-query";
+import Spinner from "../../shared/Spinner";
 
-  useEffect(() => {
-    fetch("appointmentOptions.json")
-      .then((res) => res.json())
-      .then((data) => setAppiontmentOptions(data));
-  }, []);
+const AvailableAppointments = ({ selectedDate }) => {
+  // const [appiontmentOptions, setAppiontmentOptions] = useState([]);
+  const [tretment, setTretment] = useState(null);
+  const date = format(selectedDate, "PP");
+
+  const {
+    data: appiontmentOptions = [],
+    refetch,
+    isLoading,
+  } = useQuery({
+    queryKey: ["appiontmentOptions", date],
+    queryFn: async () => {
+      const res = await fetch(
+        `http://localhost:5000/appiontmentOptions?date=${date}`
+      );
+      const data = await res.json();
+      return data;
+    },
+  });
+
+  if (isLoading) {
+    return <Spinner />;
+  }
+
+  // useEffect(() => {
+  //   fetch("http://localhost:5000/appiontmentOptions")
+  //     .then((res) => res.json())
+  //     .then((data) => setAppiontmentOptions(data));
+  // }, []);
+
   return (
     <section className="my-16">
       <p className="text-center font-bold text-primary">
@@ -29,6 +53,7 @@ const AvailableAppointments = ({ selectedDate }) => {
         <BookingModal
           tretment={tretment}
           setTretment={setTretment}
+          refetch={refetch}
           selectedDate={selectedDate}
         />
       )}
