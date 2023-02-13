@@ -1,5 +1,5 @@
 import React from "react";
-import { useRouteError } from "react-router-dom";
+import { Link, useRouteError } from "react-router-dom";
 
 const ErrrorPage = () => {
   const error = useRouteError();
@@ -17,13 +17,13 @@ const ErrrorPage = () => {
           <p className="mt-4 mb-8 dark:text-gray-400">
             But dont worry, you can find plenty of other things on our homepage.
           </p>
-          <a
+          <Link
             rel="noopener noreferrer"
-            href="/"
+            to="/"
             className="px-8 py-3 font-semibold rounded dark:bg-violet-400 dark:text-gray-900"
           >
             Back to homepage
-          </a>
+          </Link>
         </div>
       </div>
     </section>
