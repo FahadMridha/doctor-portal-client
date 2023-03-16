@@ -73,6 +73,26 @@ const AddDoctor = () => {
     <div className=" w-96 p-8">
       <h2 className="text-4xl">Add Doctor</h2>
 
+      <p>
+        Lorem ipsum dolor, sit amet consectetur adipisicing elit. Aliquid nemo
+        saepe vel harum, doloremque similique ea eius deleniti rerum! Incidunt
+        explicabo provident molestias, delectus, laboriosam et, ducimus quia
+        consequuntur iure recusandae fugiat harum quasi deserunt a repudiandae
+        reprehenderit aperiam! Expedita, consequuntur assumenda! Optio
+        repellendus nisi, facere dolor quibusdam tenetur doloribus odit itaque
+        eveniet harum animi recusandae iste quas numquam minus repellat, nihil
+        dolores cupiditate amet laudantium maxime ea. Aliquam quibusdam ad
+        aspernatur dolorem velit. Quo voluptates odit ut temporibus eum
+        consequuntur dolorem iure fugiat tempora aliquid illo aut accusamus
+        reprehenderit nemo molestiae a sint ea nostrum eveniet omnis cumque
+        voluptatibus, saepe, consequatur exercitationem? Libero necessitatibus
+        qui fugiat harum quaerat voluptatibus facilis sit alias architecto et
+        nostrum culpa vero eligendi, possimus quisquam atque quos nulla minus
+        doloremque voluptates quam laudantium voluptatum. Esse ut assumenda
+        eligendi sint, fugit eos velit, nulla accusamus impedit sunt aut porro
+        sed, ipsa sit maxime perferendis? Fugiat!
+      </p>
+
       <form onSubmit={handleSubmit(handlarAddDoctor)}>
         <div className="form-control w-full max-w-xs">
           <label className="label">
